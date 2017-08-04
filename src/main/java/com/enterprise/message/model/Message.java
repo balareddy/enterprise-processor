@@ -14,32 +14,20 @@ import java.util.Set;
 
 public class Message {
 
-    @Min(value = 1, message = "seqNum should not be less than 1")
-    @Max(value = Long.MAX_VALUE, message = "seqNum exceeded max value")
     private final long seqNum;
 
-    @NotNull(message = "Message cannot be null")
     private final String msg;
 
-    @NotNull(message = "Priority cannot be null")
     private final Priority priority;
 
-    @NotNull(message = "MessageType cannot be null")
     private final MessageType type;
 
-    public Message(long seqNum, String msg, MessageType type, Priority priority) {
+    public Message(long seqNum, @NotNull String msg, @NotNull MessageType type, @NotNull Priority priority) {
         this.seqNum = seqNum;
 
         this.msg = msg;
         this.priority = priority;
         this.type = type;
-    }
-
-    public static void main(String args[]) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Message>> violations = validator.validate(new Message(0, null, null, null));
-        System.out.println(violations.isEmpty());
     }
 
     public long getSeqNum() {
